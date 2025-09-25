@@ -20,7 +20,7 @@ AuthRouter.get('/check',AuthValidation,(req,res)=>{
         role: req.user.role,
         _id: req.user._id
     }
-    res.status(200).json({message:"Valid User", user:reply});
+    res.status(200).send({message:"User Authenticated",success:true,user:reply});
 });
 
 // // fetch user profile
