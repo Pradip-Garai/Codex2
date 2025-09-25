@@ -13,7 +13,7 @@ const ResourceAddRouter = require('../routes/resourseRoute');
 const app = express();
 
 app.use(cors({
-  origin: 'https://codex-one-theta.vercel.app/',
+  origin: 'http://localhost:5173',
   credentials: true
 }));
 
