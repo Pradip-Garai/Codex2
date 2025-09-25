@@ -12,32 +12,38 @@ const ResourceAddRouter = require('../routes/resourseRoute');
 
 const app = express();
 
+// ✅ Middlewares
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin:'http://localhost:5173',
   credentials: true
 }));
-
 app.use(express.json());
 app.use(cookieParser());
 
-// Routes
+// ✅ Routes
 app.get('/', (req, res) => {
-  res.send("Server is running on Vercel 🚀");
+  res.send("✅ Server running on Vercel 🚀");
 });
 app.use('/user', AuthRouter);
 app.use('/problem', ProblemRouter);
 app.use('/submission', SubmitRouter);
 app.use('/resource', ResourceAddRouter);
 
-// Initialize connections before handling requests
-(async () => {
-  try {
-    await Promise.all([redisClient.connect(), DBConnect()]);
-    console.log("Connected to Redis & DB");
-  } catch (error) {
-    console.error("Error connecting: " + error);
-  }
-})();
+// ✅ Connect once, reuse for all requests
+let isConnected = false;
 
-// Export the app for Vercel
+async function initConnections() {
+  if (!isConnected) {
+    try {
+      await Promise.all([redisClient.connect(), DBConnect()]);
+      isConnected = true;
+      console.log("✅ Connected to Redis & DB");
+    } catch (err) {
+      console.error("❌ Connection Error:", err);
+    }
+  }
+}
+initConnections();
+
+// ✅ Export app (NO app.listen)
 module.exports = app;
