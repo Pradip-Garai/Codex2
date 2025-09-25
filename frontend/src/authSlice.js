@@ -19,19 +19,12 @@ export const loginUser = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await axiosClient.post('/user/login', credentials);
-
-      // save token in localStorage
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-      }
-
       return response.data.user;
     } catch (error) {
       return rejectWithValue(getErrorMessage(error));
     }
   }
 );
-
 
 export const checkAuth = createAsyncThunk(
   'auth/check',
