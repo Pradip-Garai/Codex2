@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 // ✅ Routes
 app.get('/', (req, res) => {
-  res.send("✅ Server running on Vercel 🚀");
+  res.send("Server running on Vercel ");
 });
 app.use('/user', AuthRouter);
 app.use('/problem', ProblemRouter);
@@ -37,9 +37,9 @@ async function initConnections() {
     try {
       await Promise.all([redisClient.connect(), DBConnect()]);
       isConnected = true;
-      console.log("✅ Connected to Redis & DB");
+      console.log("Connected to Redis & DB");
     } catch (err) {
-      console.error("❌ Connection Error:", err);
+      console.error("Connection Error:", err);
     }
   }
 }
